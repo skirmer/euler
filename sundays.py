@@ -22,7 +22,7 @@ years = np.arange(1900,2001)
 leaps = pd.DataFrame({'year':years})
 
 # leaps including century edge cases
-leaps['leap'] = np.where(((leaps['year'] % 4 == 0) & (leaps['year'] % 100 != 0)) | ((leaps['year'] % 100 == 0) & (leaps['year'] % 400 == 0)), True, False)
+leaps['leap'] = np.where(((leaps['year'] % 4 == 0) & (leaps['year'] % 100 != 0)) | ((leaps['year'] % 100 == 0) & (leaps['year'] % 400 == 0) & (leaps['year'] % 4 == 0)), True, False)
 
 # Expand out our months to years and add the leaps
 expand_months=pd.DataFrame()
