@@ -1,6 +1,6 @@
 # Problem 19
 # You are given the following information, but you may prefer to do some research for yourself.
-#
+
 # 1 Jan 1900 was a Monday.
 # Thirty days has September,
 # April, June and November.
@@ -13,6 +13,7 @@
 
 import numpy as np
 import pandas as pd
+import scipy as sp
 
 # Set up months
 months = pd.DataFrame({'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 'days': [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]})
