@@ -13,32 +13,42 @@
 
 import numpy as np
 import pandas as pd
-import scipy as sp
+import scipy as sc
 
 # Set up months
-months = pd.DataFrame({'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 'days': [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]})
+months = pd.DataFrame(
+    {
+        "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "days": [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    }
+)
 
 # Set up years
-years = np.arange(1900,2001)
-leaps = pd.DataFrame({'year':years})
+years = np.arange(1900, 2001)
+leaps = pd.DataFrame({"year": years})
 
 # leaps including century edge cases
-leaps['leap'] = np.where(((leaps['year'] % 4 == 0) & (leaps['year'] % 100 != 0)) | ((leaps['year'] % 100 == 0) & (leaps['year'] % 400 == 0) & (leaps['year'] % 4 == 0)), True, False)
+leaps["leap"] = np.where(
+    ((leaps["year"] % 4 == 0) & (leaps["year"] % 100 != 0))
+    | ((leaps["year"] % 100 == 0) & (leaps["year"] % 400 == 0) & (leaps["year"] % 4 == 0)),
+    True,
+    False,
+)
 
 # Expand out our months to years and add the leaps
-expand_months=pd.DataFrame()
+expand_months = pd.DataFrame()
 for index, row in leaps.iterrows():
     thisyr = months.copy()
-    thisyr['year'] = row['year']
-    thisyr['leap'] = row['leap']
-    expand_months = expand_months.append(thisyr,ignore_index=True)
+    thisyr["year"] = row["year"]
+    thisyr["leap"] = row["leap"]
+    expand_months = expand_months.append(thisyr, ignore_index=True)
 
-mask = (expand_months.leap == True) & (expand_months.month == 'Feb')
-expand_months.loc[mask, 'days'] = 29
+mask = (expand_months.leap == True) & (expand_months.month == "Feb")
+expand_months.loc[mask, "days"] = 29
 
 # Now we have the calendar laid out in dataframe.
 # what's next?
 # first day of first month is Monday
 # sixth day of first month is Sunday
 
-week1 = np.arange(1,8)
+week1 = np.arange(1, 8)
